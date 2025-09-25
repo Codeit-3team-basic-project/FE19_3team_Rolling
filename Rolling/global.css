@@ -47,10 +47,6 @@
   --color-error: #dc3a3a;
   --color-surface: #f6f8ff;
 
-  /* font-family */
-  --font-regular: Pretendard-Regular, sans-serif;
-  --font-bold: Pretendard-Bold, sans-serif;
-
   /* font-size */
   --text-28: 28px;
   --text-24: 24px;
@@ -60,4 +56,17 @@
   --text-15: 15px;
   --text-14: 14px;
   --text-12: 12px;
+
+  --spacing: 1px;
+}
+
+@layer utilities {
+  .font-regular {
+    font-family: "Pretendard", sans-serif;
+  }
+
+  .font-bold {
+    font-family: "Pretendard", sans-serif;
+    font-weight: bold;
+  }
 }
