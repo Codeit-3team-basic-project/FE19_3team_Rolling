@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import ModalExamples from './components/examples/ModalExamples';
-import MessageModal from './components/examples/MessageModal';
+import Header from './Header';
+// import ModalExamples from './components/examples/ModalExamples';
+// import MessageModal from './components/examples/MessageModal';
 
 function App() {
-  const [messageModalOpen, setMessageModalOpen] = useState(false);
+  const [_messageModalOpen, setMessageModalOpen] = useState(false);
 
-  const sampleMessage = {
+  const _sampleMessage = {
     profileImage: 'https://via.placeholder.com/40',
     senderName: '홍길동',
     tag: '중요',
@@ -16,6 +17,7 @@ function App() {
 
   return (
     <div className='min-h-screen bg-gray-100'>
+      <Header />
       <div className='container mx-auto py-8'>
         <div className='text-center mb-8'>
           <h1 className='text-4xl font-bold text-gray-900 mb-4'>
@@ -32,7 +34,7 @@ function App() {
           </button>
         </div>
 
-        <ModalExamples />
+        {/* <ModalExamples />
 
         <MessageModal
           isOpen={messageModalOpen}
@@ -46,7 +48,7 @@ function App() {
             alert('메시지를 확인했습니다!');
             setMessageModalOpen(false);
           }}
-        />
+        /> */}
       </div>
     </div>
   );
