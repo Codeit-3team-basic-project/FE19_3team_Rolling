@@ -1,4 +1,5 @@
 /* 모든 페이지에 적용되는 foundation CSS. */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 @import 'tailwindcss';
 
 @theme {
@@ -68,5 +69,15 @@
   .font-bold {
     font-family: 'Pretendard', sans-serif;
     font-weight: bold;
+  }
+
+  .poppins-regular {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+  }
+
+  .poppins-bold {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
   }
 }
