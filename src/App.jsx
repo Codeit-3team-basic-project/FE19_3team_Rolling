@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import Header from './Header';
+import Header from './components/common/Header';
+import PostHeader from './components/common/postHeader/PostHeader';
 // import ModalExamples from './components/examples/ModalExamples';
 // import MessageModal from './components/examples/MessageModal';
 
@@ -18,6 +19,7 @@ function App() {
   return (
     <div className='min-h-screen bg-gray-100'>
       <Header />
+      <PostHeader />
       <div className='container mx-auto py-8'>
         <div className='text-center mb-8'>
           <h1 className='text-4xl font-bold text-gray-900 mb-4'>
