@@ -1,5 +1,8 @@
 /* 모든 페이지에 적용되는 foundation CSS. */
+
 @import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
 
 @theme {
   --color-gold-999: #ffa300; /* 실험용 변수 */
@@ -70,3 +73,4 @@
     font-weight: bold;
   }
 }
+
