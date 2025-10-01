@@ -3,7 +3,7 @@
 
 function ShareDropdown() {
   return (
-    <ul className='absolute top-120 border-solid border-1 border-gray-300 rounded-md z-10 text-center py-10 bg-white text-black text-16 font-regular'>
+    <ul className='w-138 border-solid border-1 border-gray-300 rounded-md z-10 text-center py-10 bg-white text-black text-16 font-regular'>
       <li className='cursor-pointer px-16 py-12 hover:bg-gray-100'>
         카카오톡 공유하기
       </li>

@@ -1,10 +1,12 @@
 // Post 페이지에 적용되는 헤더입니다.
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import ShareDropdown from './ShareDropdown';
 import EmojiDropdown from './EmojiDropdown';
 import EmojiPicker from 'emoji-picker-react';
 
 function PostHeader() {
+  const menuRef = useRef();
+
   const [name, _setName] = useState('Ashley Kim');
   const [peopleCount, _setPeopleCount] = useState(0);
   const [emojiDrop, setEmojiDrop] = useState(false);
@@ -23,8 +25,26 @@ function PostHeader() {
     setShareDrop(shareDrop => !shareDrop);
   };
 
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setEmojiDrop(false);
+        setEmojiPicker(false);
+        setShareDrop(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuRef]);
+
   return (
-    <div className='bg-white text-black border-b-1 border-solid border-b-gray-200'>
+    <div
+      className='bg-white text-black border-b-1 border-solid border-b-gray-200'
+      ref={menuRef}
+    >
       <div className='flex items-center justify-between max-w-1200 mx-auto py-11 text-18'>
         <div className='text-28 text-gray-800 font-bold'>To. {name}</div>
         <div className='flex items-center'>
@@ -68,14 +88,18 @@ function PostHeader() {
               </div>
             )}
           </div>
-          <div className='pl-13'>
+          <div className='pl-13 relative inline-block'>
             <button
               onClick={handleShareClick}
               className='flex cursor-pointer gap-10 px-16 py-6 border-solid border-1 border-gray-300 hover:bg-gray-200 rounded-md'
             >
               <div className='w-24 h-24 bg-[url(../../../share-24.svg)] bg-cover bg-no-repeat bg-center'></div>
             </button>
-            {shareDrop && <ShareDropdown />}
+            {shareDrop && (
+              <div className='absolute top-full'>
+                <ShareDropdown />
+              </div>
+            )}
           </div>
         </div>
       </div>
