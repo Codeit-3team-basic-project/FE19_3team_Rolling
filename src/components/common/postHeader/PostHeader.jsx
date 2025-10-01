@@ -66,14 +66,18 @@ function PostHeader() {
                 <div>30</div>
               </button>
             </div>
-            <div className='px-8'>
+            <div className='px-8 relative'>
               <button
                 onClick={handleEmojiClick}
-                className='flex relative items-center cursor-pointer'
+                className='flex items-center cursor-pointer'
               >
                 <div className='w-36 h-36 bg-[url(../../../arrow_down.svg)] bg-cover bg-no-repeat bg-center'></div>
               </button>
-              {emojiDrop && <EmojiDropdown />}
+              {emojiDrop && (
+                <div className='absolute top-full right-0'>
+                  <EmojiDropdown />
+                </div>
+              )}
             </div>
             <button
               onClick={handleEmojiPicker}
@@ -83,7 +87,7 @@ function PostHeader() {
               <div>추가</div>
             </button>
             {emojiPicker && (
-              <div className='absolute top-120 right-300'>
+              <div className='absolute top-120 right-0'>
                 <EmojiPicker />
               </div>
             )}
