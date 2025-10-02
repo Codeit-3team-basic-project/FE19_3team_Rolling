@@ -18,8 +18,9 @@ export default function Card({
       </h3>
 
       {/* 아바타 프로필 목록 */}
+      <div className="flex flex-row flex-wrap items-center gap-12">
       <AvatarStack avatars={avatars} />
-
+      </div>
       {/* 참여자 수 표시 */}
       <div className="flex items-center gap-2 w-[125px] h-[26px] opacity-100">
         <p className="text-gray-700 font-pretendard text-base leading-[26px] tracking-[-0.01em]">
@@ -39,13 +40,13 @@ function AvatarStack({ avatars = [] }) {
   const extra = avatars.length - visible.length;
 
   return (
-    <div className="flex items-center w-[42px] h-[32px] opacity-100 relative -left-[10px]">
+    <div className="flex -space-x-8">
       {visible.map((src, i) => (
         <img
           key={i}
           src={src}
           alt={`avatar-${i}`}
-          className={`w-8 h-8 rounded-full object-cover ring-2 ring-white ${
+          className={`w-28 h-28 rounded-full object-cover ring-2 ring-white ${
             i ? "-ml-2" : ""
           }`}
         />
