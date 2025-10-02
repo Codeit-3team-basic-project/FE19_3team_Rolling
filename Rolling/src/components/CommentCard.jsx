@@ -1,4 +1,3 @@
-// src/components/ProfileCard.jsx
 import { useEffect, useRef, useState } from "react";
 
 export default function CommentCard({
@@ -7,7 +6,7 @@ export default function CommentCard({
   relation,
   comment,
   date,
-  onDelete = () => console.log('삭제 버튼 클릭됨'),
+  onDelete = () => {},
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showMoreButton, setShowMoreButton] = useState(false);
@@ -99,7 +98,7 @@ export default function CommentCard({
         {showMoreButton && (
           <button 
             onClick={toggleExpanded}
-            className="absolute bottom-1 right-2 text-xs text-blue-500 hover:text-blue-700"
+            className="absolute bottom-0 right-2 text-xs text-blue-500 hover:text-blue-700"
           >
             {isExpanded ? '접기' : '더보기'}
           </button>

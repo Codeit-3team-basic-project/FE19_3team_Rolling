@@ -5,17 +5,11 @@ import Header from "../components/common/Header";
 
 export default function Home() {
   const [comments, setComments] = useState([]);
+  const [cardData, setCardData] = useState(null);
 
-  // API에서 댓글 데이터 가져오기
   useEffect(() => {
     const fetchCommentData = async () => {
       try {
-        // 실제 API 호출 예시
-        // const response = await fetch('/api/comments/1');
-        // const data = await response.json();
-        // setCommentData(data);
-        
-        // 임시 데이터 (실제로는 API에서 받아옴)
         const mockComments = [
           {
             id: 1,
@@ -33,7 +27,33 @@ export default function Home() {
       }
     };
 
+    const fetchCardData = async () => {
+      try {
+        
+        const mockCardData = {
+          name: "홍독이",
+          avatars: [
+            "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=faces",
+            "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=faces",
+            "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=faces",    
+            "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=faces",
+          ],
+          participants: 15,
+          reactions: [
+            { emoji: "👍", count: 8 },
+            { emoji: "😍", count: 12 },
+            { emoji: "😢", count: 3 },
+          ]
+        };
+        
+        setCardData(mockCardData);
+      } catch (error) {
+        console.error('카드 데이터를 가져오는데 실패했습니다:', error);
+      }
+    };
+
     fetchCommentData();
+    fetchCardData();
   }, []);
 
   const handleDeleteComment = (commentId) => {
@@ -45,7 +65,16 @@ export default function Home() {
       <Header />
       
       <p>여기는 홈 화면입니다.</p>
-      <Card />
+      {cardData ? (
+        <Card 
+          name={cardData.name}
+          avatars={cardData.avatars}
+          participants={cardData.participants}
+          reactions={cardData.reactions}
+        />
+      ) : (
+        <div>카드 로딩 중...</div>
+      )}
       
       {comments.map(comment => (
         <CommentCard 
@@ -58,10 +87,6 @@ export default function Home() {
           avatarSrc={comment.avatarSrc}
         />
       ))}
-     
-      
-     
-      
     </div>
   );
 }
