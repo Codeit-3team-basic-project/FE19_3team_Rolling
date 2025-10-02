@@ -22,7 +22,7 @@ export default function Home() {
             name: "홍독이",
             relation: "친구",
             comment: "프로젝트 축하해!ㄹㄹㄹㄹㄹㄹㄹㄹ 정신머리도ㄹㅇㄹㅇㄹㅇㄹ정신머리도ㄹㅇㄹㅇㄹㅇㄹ정신머리도ㄹㅇㄹㅇㄹㅇㄹ정신머리도ㄹㅇㄹㅇㄹㅇㄹ정신머리도ㄹㅇㄹㅇㄹㅇㄹ 정신머리도ㄹㄹ 정신머리도ㄹㄹ 정신머리도ㄹㄹ 정신머리도ㄹㄹ 정신머리도 꼭 커밋하길 바라!",
-            date: "2024.01.15",
+            date: "1997.02.16",
             avatarSrc: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=faces"
           },
       
@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <h1>메인 홈페이지</h1>
+      
       <p>여기는 홈 화면입니다.</p>
       <Card />
       

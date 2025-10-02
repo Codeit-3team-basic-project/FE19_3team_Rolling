@@ -2,11 +2,11 @@
 import { useEffect, useRef, useState } from "react";
 
 export default function CommentCard({
-  avatarSrc = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=80&h=80&fit=crop&crop=faces",
-  name = "보낸 사람",
-  relation = "동료",
-  comment = "코로나가 또다시 기승을 부리는 요즘이네요.\n건강ㅇㅇㅇ, 체력 모두 조ㅇㅇㅇㅇㅇㅇㅇㅇ두 조ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ두 조ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ두 조ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ심 또 하세요!",
-  date = "2023.07.08",
+  avatarSrc,
+  name,
+  relation,
+  comment,
+  date,
   onDelete = () => console.log('삭제 버튼 클릭됨'),
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
