@@ -1,5 +1,6 @@
 export default {
   plugins: {
-    '@tailwindcss/postcss': {},
+    '@tailwindcss/postcss': {}, // 변경된 부분
+    autoprefixer: {},
   },
 };
