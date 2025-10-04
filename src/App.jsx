@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import Header from './components/common/Header';
+// import Header from './components/common/Header';
 import PostHeader from './components/common/postHeader/PostHeader';
+import PostMessage from './pages/postMessage';
+// import EmojiPickerz from './components/common/EmojiPickerz';
 // import ModalExamples from './components/examples/ModalExamples';
 // import MessageModal from './components/examples/MessageModal';
 
 function App() {
-  const [_messageModalOpen, setMessageModalOpen] = useState(false);
+  const [_messageModalOpen, _setMessageModalOpen] = useState(false);
 
   const _sampleMessage = {
     profileImage: 'https://via.placeholder.com/40',
@@ -18,9 +20,10 @@ function App() {
 
   return (
     <div className='min-h-screen bg-gray-100'>
-      <Header />
+      {/* <Header /> */}
       <PostHeader />
-      <div className='container mx-auto py-8'>
+      <PostMessage />
+      {/* <div className='container mx-auto py-8'>
         <div className='text-center mb-8'>
           <h1 className='text-4xl font-bold text-gray-900 mb-4'>
             Modal 컴포넌트 테스트
@@ -34,9 +37,9 @@ function App() {
           >
             메시지 모달 테스트
           </button>
-        </div>
+        </div> */}
 
-        {/* <ModalExamples />
+      {/* <ModalExamples />
 
         <MessageModal
           isOpen={messageModalOpen}
@@ -51,7 +54,7 @@ function App() {
             setMessageModalOpen(false);
           }}
         /> */}
-      </div>
+      {/* </div> */}
     </div>
   );
 }
