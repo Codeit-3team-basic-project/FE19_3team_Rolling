@@ -2,7 +2,8 @@
 import { useState, useRef, useEffect } from 'react';
 import ShareDropdown from './ShareDropdown';
 import EmojiDropdown from './EmojiDropdown';
-import EmojiPicker from 'emoji-picker-react';
+import EmojiPickerz from '../EmojiPickerz';
+import 'emoji-picker-element';
 
 function PostHeader() {
   const menuRef = useRef();
@@ -79,18 +80,21 @@ function PostHeader() {
                 </div>
               )}
             </div>
-            <button
-              onClick={handleEmojiPicker}
-              className='flex relative gap-4 px-16 py-6 border-1 border-solid border-gray-300 hover:bg-gray-200 rounded-md text-16'
-            >
-              <div className='w-24 h-24 bg-[url(../../../add-24.svg)] bg-cover bg-no-repeat bg-center'></div>
-              <div>추가</div>
-            </button>
-            {emojiPicker && (
-              <div className='absolute top-120 right-0'>
-                <EmojiPicker />
-              </div>
-            )}
+            <div className='relative'>
+              <button
+                onClick={handleEmojiPicker}
+                className='flex gap-4 px-16 py-6 border-1 border-solid border-gray-300 hover:bg-gray-200 rounded-md text-16'
+              >
+                <div className='w-24 h-24 bg-[url(../../../add-24.svg)] bg-cover bg-no-repeat bg-center'></div>
+                <div>추가</div>
+              </button>
+              {emojiPicker && (
+                <div className='absolute top-full right-0'>
+                  <EmojiPickerz />
+                  {/* <emoji-picker></emoji-picker>  */}
+                </div>
+              )}
+            </div>
           </div>
           <div className='pl-13 relative inline-block'>
             <button
