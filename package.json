@@ -14,7 +14,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "emoji-picker-react": "^4.13.3",
+    "emoji-picker-element": "^1.27.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
