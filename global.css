@@ -72,5 +72,22 @@
     font-family: "Pretendard", sans-serif;
     font-weight: bold;
   }
+<<<<<<< HEAD
+=======
+
+  .poppins-regular {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+  }
+
+  .poppins-bold {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+  }
+
+  .round {
+    border-radius: 100px;
+  }
+>>>>>>> feature/Minsoo
 }
 

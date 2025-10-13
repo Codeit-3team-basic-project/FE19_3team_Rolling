@@ -1,8 +1,9 @@
 import { useState } from 'react';
 // import Header from './components/common/Header';
 import PostHeader from './components/common/postHeader/PostHeader';
-import Button from './components/common/button';
-import { IconPlus, IconArrow } from './components/common/icons/IconButton';
+import PostMessage from './pages/PostMessage';
+// import Button from './components/common/button';
+// import { IconPlus, IconArrow } from './components/common/icons/IconButton';
 
 // import ModalExamples from './components/examples/ModalExamples';
 // import MessageModal from './components/examples/MessageModal';
