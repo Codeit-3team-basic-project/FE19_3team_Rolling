@@ -7,7 +7,7 @@ import { IconPlus, IconArrow } from './components/common/icons/IconButton';
 // import ModalExamples from './components/examples/ModalExamples';
 // import MessageModal from './components/examples/MessageModal';
 
-function App() {
+export default function App() {
   const [_messageModalOpen, _setMessageModalOpen] = useState(false);
 
   const _sampleMessage = {
@@ -55,30 +55,30 @@ function App() {
             setMessageModalOpen(false);
           }}
         /> */}
-      </div>
-      <div>
-        <h2>버튼 테스트입니다</h2>
-        <Button variant='primary' size='40' state='enabled' icon=''>
-          Primary
-        </Button>
-        <Button variant='secondary' size='36' state='enabled' icon=''>
-          secondary
-        </Button>
-        <Button variant='outlined' size='32' state='enabled' icon=''>
-          outlined
-        </Button>
-        <Button
-          variant='circle'
-          size='56'
-          state='enabled'
-          icon={<IconPlus size='28' />}
-        />
-        <Button
-          variant='arrow'
-          state='enabled'
-          icon={<IconArrow size='28' />}
-        />
-      </div>
     </div>
+    //   <div>
+    //     <h2>버튼 테스트입니다</h2>
+    //     <Button variant='primary' size='40' state='enabled' icon=''>
+    //       Primary
+    //     </Button>
+    //     <Button variant='secondary' size='36' state='enabled' icon=''>
+    //       secondary
+    //     </Button>
+    //     <Button variant='outlined' size='32' state='enabled' icon=''>
+    //       outlined
+    //     </Button>
+    //     <Button
+    //       variant='circle'
+    //       size='56'
+    //       state='enabled'
+    //       icon={<IconPlus size='28' />}
+    //     />
+    //     <Button
+    //       variant='arrow'
+    //       state='enabled'
+    //       icon={<IconArrow size='28' />}
+    //     />
+    //   </div>
+    // </div>
   );
 }
