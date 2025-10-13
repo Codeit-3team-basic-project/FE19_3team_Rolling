@@ -80,4 +80,8 @@
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
   }
+
+  .round {
+    border-radius: 100px;
+  }
 }
