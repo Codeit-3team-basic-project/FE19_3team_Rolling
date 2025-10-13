@@ -8,12 +8,10 @@ function Header({ isDisplayed = true }) {
   return (
     <div className='bg-white text-black border-b-1 border-solid border-b-gray-200'>
       <div className='flex items-center justify-between max-w-1200 mx-auto py-11 text-20'>
-        <div className='flex gap-8 cursor-pointer'>
+        <Link to='/' className='flex gap-8 cursor-pointer'>
           <img src='./rolling.svg' className='size-28' alt='rolling' />
-          <a href='https://www.google.com' className='poppins-bold'>
-            Rolling
-          </a>
-        </div>
+          <span className='poppins-bold'>Rolling</span>
+        </Link>
         <div>
           {isDisplayed && (
             <button
