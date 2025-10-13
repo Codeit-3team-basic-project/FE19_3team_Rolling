@@ -1,4 +1,5 @@
 // 롤링 서비스 모든 페이지에 적용되는 헤더입니다.
+import { Link } from 'react-router-dom';
 function Header({ isDisplayed = true }) {
   // 추후에 생성 페이지로 이동하는 코드 작성 예정.
   const handleOnClick = () => {
