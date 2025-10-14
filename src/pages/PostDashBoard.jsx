@@ -1,40 +1,79 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Header from '../components/common/Header';
 import PostHeader from '../components/common/postHeader/PostHeader';
 import CommentCard from '../components/CommentCard';
 import Button from '../components/common/buttons/Button';
-import { getRecipients, deleteRecipient } from '../api/recipients';
 import MessageModal from '../components/common/Modal';
 
 function PostDashBoard() {
-  const [recipients, setRecipients] = useState([]);
+  const { id } = useParams();
+  const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState(null);
+  const [setRecipient] = useState();
 
   useEffect(() => {
-    async function fetchRecipients() {
+    async function fetchMessages() {
       try {
-        const data = await getRecipients();
-        setRecipients(data.results);
+        const res = await fetch(
+          `https://rolling-api.vercel.app/19-3/recipients/${id}/messages/`,
+          {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+            },
+          }
+        );
+
+        const data = await res.json();
+        setMessages(data.results);
       } catch (error) {
-        console.error('Failed to fetch recipients:', error);
+        console.error('Failed to fetch messages:', error);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchRecipients();
-  }, []);
+    async function getRecipient() {
+      try {
+        const res = await fetch(
+          `https://rolling-api.vercel.app/19-3/recipients/${id}/`,
+          {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+            },
+          }
+        );
+
+        const data = await res.json();
+        setRecipient(data);
+      } catch (error) {
+        console.error('Failed to fetch messages:', error);
+      }
+    }
+
+    fetchMessages();
+    getRecipient();
+  }, [id]);
 
   // 삭제 함수
-  const handleDelete = async id => {
+  const handleDelete = async messageId => {
     try {
-      await deleteRecipient(id);
-      setRecipients(prev => prev.filter(r => r.id !== id));
+      await fetch(
+        `https://rolling-api.vercel.app/19-3/messages/${messageId}/`,
+        {
+          method: 'DELETE',
+          headers: {
+            Accept: 'application/json',
+          },
+        }
+      );
+      alert(`삭제 성공!`);
     } catch (error) {
-      console.error('삭제 중 오류:', error);
+      console.error('Failed to fetch messages:', error);
     }
   };
 
@@ -55,10 +94,13 @@ function PostDashBoard() {
       <Header />
       <PostHeader />
 
-      <div className='w-screen min-h-[calc(100vh-130px)] py-110 bg-orange-200'>
+      <div
+        className='w-screen min-h-[calc(100vh-130px)] py-110'
+        style={{ backgroundColor: 'white' }}
+      >
         <div className='w-1200 mx-auto'>
           <div className='w-full mb-10 flex justify-end'>
-            <Link to='/post/message'>
+            <Link to='/post/:id/message'>
               <Button variant='primary' size='40' state='enabled'>
                 생성하기
               </Button>
@@ -69,28 +111,28 @@ function PostDashBoard() {
             <p>로딩 중...</p>
           ) : (
             <div className='w-full grid grid-cols-3 gap-24'>
-              {recipients.map(recipient => {
-                const message = recipient.recentMessages[0];
+              {messages.map(Messages => {
+                const message = Messages;
                 return (
                   <div
-                    key={recipient.id}
+                    key={Messages.id}
                     onClick={() => handleOpenModal(message)}
                   >
                     <CommentCard
                       avatarSrc={
                         message?.profileImageURL ||
-                        recipient.backgroundImageURL ||
+                        Messages.backgroundImageURL ||
                         'https://learn-codeit-kr-static.s3.ap-northeast-2.amazonaws.com/sprint-proj-image/default_avatar.png'
                       }
-                      name={recipient.name}
-                      relation={message?.relationship || '친구'}
+                      name={Messages.name}
+                      relation={message?.relationship || '지인'}
                       comment={message?.content || '메시지가 없습니다'}
                       date={
                         message
                           ? new Date(message.createdAt).toLocaleDateString()
-                          : new Date(recipient.createdAt).toLocaleDateString()
+                          : new Date(Messages.createdAt).toLocaleDateString()
                       }
-                      onDelete={() => handleDelete(recipient.id)}
+                      onDelete={() => handleDelete(Messages.id)}
                     />
                   </div>
                 );
