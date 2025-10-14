@@ -15,8 +15,10 @@ function PostMessage() {
     'https://learn-codeit-kr-static.s3.ap-northeast-2.amazonaws.com/sprint-proj-image/default_avatar.png'
   );
   const [relationship, _setRelationship] = useState('지인');
-  const [content, _setContent] = useState('Test Message');
+  const [content, _setContent] = useState('');
   const [font, setFont] = useState('Noto Sans');
+
+  let condition = sender === '' || content === ''; // sender와 content에 내용이 있어야만 버튼 활성화됩니다.
 
   // UseEffect 이용해서 처음부터 프로필 이미지 받아오기.
   useEffect(() => {
@@ -117,12 +119,12 @@ function PostMessage() {
         <div className='flex flex-col gap-12'>
           <label className='text-24 font-bold'>폰트 선택</label>
           <Dropdown options={FONTS} onSelect={setFont} />
-          {/* 지원님 드롭박스 받아와야함 */}
         </div>
       </div>
       <button
         onClick={handleClick}
-        className='cursor-pointer flex w-720 mx-auto my-62 px-24 py-14 rounded-xl bg-purple-600 text-18 text-white justify-center'
+        className='cursor-pointer flex w-720 mx-auto my-62 px-24 py-14 rounded-xl bg-purple-600 disabled:bg-gray-400 text-18 text-white justify-center'
+        disabled={condition}
       >
         생성하기
       </button>
