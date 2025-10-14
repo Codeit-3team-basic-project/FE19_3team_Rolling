@@ -1,4 +1,4 @@
-import PostBackground from './pages/postBackground';
+import AppRouter from './Router';
 
 export default function App() {
   return (
