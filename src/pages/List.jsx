@@ -45,20 +45,27 @@ export default function List() {
 
   const cardsPerPage = 4;
 
-  // API에서 받은 데이터를 인기/최근으로 분류
-  const popularCards = cards.filter(card => {
-    // 인기 기준: 반응 수가 많은 카드들
-    const totalReactions =
-      card.reactions?.reduce((sum, r) => sum + r.count, 0) || 0;
-    return totalReactions > 5 || card.participants > 10;
-  });
+  // 카드의 점수를 계산하는 함수
+  const calculateCardScore = (card) => {
+    const totalReactions = card.reactions?.reduce((sum, r) => sum + r.count, 0) || 0;
+    // 리액션 1개당 1점, 참여자 1명당 2점
+    return totalReactions + (card.participants * 2);
+  };
 
-  const recentCards = cards.filter(card => {
-    // 최근 기준: 인기가 아닌 나머지 카드들
-    const totalReactions =
-      card.reactions?.reduce((sum, r) => sum + r.count, 0) || 0;
-    return totalReactions <= 5 && card.participants <= 10;
-  });
+  // API에서 받은 데이터를 인기/최근으로 분류
+  const popularCards = cards
+    .filter(card => {
+      const totalReactions = card.reactions?.reduce((sum, r) => sum + r.count, 0) || 0;
+      // 최소 리액션 1개 이상인 카드만 선택
+      return totalReactions > 0;
+    })
+    .sort((a, b) => calculateCardScore(b) - calculateCardScore(a)); // 점수가 높은 순으로 정렬
+
+  const recentCards = cards
+    .filter(card => {
+      const totalReactions = card.reactions?.reduce((sum, r) => sum + r.count, 0) || 0;
+      return totalReactions === 0;
+    });
 
   const popularTotalPages = Math.ceil(popularCards.length / cardsPerPage);
   const recentTotalPages = Math.ceil(recentCards.length / cardsPerPage);

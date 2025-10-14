@@ -13,7 +13,7 @@ export default function Home() {
         <section className='relative w-[1200px] h-[324px] rounded-[16px] bg-[#F6F8FF] p-10 flex flex-col justify-center'>
           {/* 왼쪽 텍스트 */}
           <div className='ml-50'>
-            <h1 className='mb-20 bg-purple-600 text-white w-[80px] h-[32px] rounded-[50px] pt-[6px] pr-[12px] pb-[6px] pl-[12px] flex items-center justify-center gap-[10px] font-[Pretendard] font-bold text-[14px] leading-[20px] tracking-[-0.005em]'>
+            <h1 className='mb-20 bg-purple-600 text-white w-[85px] h-[32px] rounded-[50px] pt-[6px] pr-[12px] pb-[6px] pl-[12px] flex items-center justify-center gap-[10px] font-[Pretendard] font-bold text-[14px] leading-[20px] tracking-[-0.005em]'>
               Point. 01
             </h1>
             <p className='font-bold text-[24px] leading-[36px] tracking-[-0.01em] mb-2'>
@@ -43,7 +43,7 @@ export default function Home() {
 
           {/* 오른쪽 텍스트 */}
           <div className='ml-auto mr-170'>
-            <h1 className='mb-20 bg-purple-600 text-white w-[80px] h-[32px] rounded-[50px] pt-[6px] pr-[12px] pb-[6px] pl-[12px] flex items-center justify-center gap-[10px] font-[Pretendard] font-bold text-[14px] leading-[20px] tracking-[-0.005em]'>
+            <h1 className='mb-20 bg-purple-600 text-white w-[85px] h-[32px] rounded-[50px] pt-[6px] pr-[12px] pb-[6px] pl-[12px] flex items-center justify-center gap-[10px] font-[Pretendard] font-bold text-[14px] leading-[20px] tracking-[-0.005em]'>
               Point. 02
             </h1>
             <p className='font-bold text-[24px] leading-[36px] tracking-[-0.01em] mb-2'>
