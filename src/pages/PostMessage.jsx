@@ -1,6 +1,7 @@
 import Header from '../components/common/Header';
 import Dropdown from '../components/common/dropdown/Dropdown';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const URL = 'https://rolling-api.vercel.app';
 const TEAM = '19-3';
@@ -12,15 +13,18 @@ const FONTS = ['Noto Sans', 'Pretendard', 'Poppins']; // Font 모음입니다.
 function PostMessage() {
   const [imageArr, setImageArr] = useState([]);
   const [sender, setSender] = useState('');
+  const [senderFocus, setSenderFocus] = useState(false);
   const [profileImage, setProfileImage] = useState(
     'https://learn-codeit-kr-static.s3.ap-northeast-2.amazonaws.com/sprint-proj-image/default_avatar.png'
   );
   const [relationship, setRelationship] = useState('지인');
   const [content, setContent] = useState('');
   const [font, setFont] = useState('Noto Sans');
-  const [success, setSuccess] = useState(false);
 
-  let condition = sender === '' || content === ''; // sender와 content에 내용이 있어야만 버튼 활성화됩니다.
+  const navigate = useNavigate();
+
+  let nameCondition = sender === '' && senderFocus;
+  let buttonCondition = sender === '' || content === ''; // sender와 content에 내용이 있어야만 버튼 활성화됩니다.
 
   // UseEffect 이용해서 처음부터 프로필 이미지 받아오기.
   useEffect(() => {
@@ -64,16 +68,16 @@ function PostMessage() {
         body: JSON.stringify(postData),
       });
 
-      setSuccess(true);
+      navigate(`/post/${ID}`);
     } catch (err) {
       throw new Error(`Post Error ${err}`);
     }
   };
 
-  // 메시지 전송 성공한 경우 /post/{id} 페이지로 다시 이동
-  if (success) {
-    return;
-  }
+  const changeSender = e => {
+    setSender(e.target.value);
+    setSenderFocus(true);
+  };
 
   return (
     <div>
@@ -84,10 +88,15 @@ function PostMessage() {
           <input
             type='text'
             value={sender}
-            onChange={e => setSender(e.target.value)}
+            onChange={changeSender}
             className='py-12 px-16 border-1 border-solid border-gray-300 rounded-lg'
             placeholder='이름을 입력해 주세요.'
           ></input>
+          {nameCondition && (
+            <div className='text-red-600 text-12 font-regular'>
+              값을 입력해 주세요.
+            </div>
+          )}
         </div>
         <div className='flex gap-12 flex-col'>
           <label className='text-24 font-bold'>프로필 이미지</label>
@@ -136,12 +145,11 @@ function PostMessage() {
       </div>
       <button
         onClick={handleClick}
-        className='cursor-pointer flex w-720 mx-auto my-62 px-24 py-14 rounded-xl bg-purple-600 disabled:bg-gray-400 disabled:cursor-default text-18 text-white justify-center'
-        disabled={condition}
+        className='cursor-pointer flex w-720 mx-auto my-62 px-24 py-14 rounded-xl bg-purple-600 hover:bg-purple-900 disabled:bg-gray-400 disabled:cursor-default text-18 text-white justify-center'
+        disabled={buttonCondition}
       >
         생성하기
       </button>
-      {/* 수빈님 버튼 받아와야함 일단 임시로 내가 만듬 */}
     </div>
   );
 }
