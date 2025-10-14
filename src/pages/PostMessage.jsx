@@ -10,7 +10,7 @@ const RELATIONS = ['지인', '친구', '동료', '가족'];
 const FONTS = ['Noto Sans', 'Pretendard', 'Poppins']; // Font 모음입니다.
 
 function PostMessage() {
-  const { ID } = useParams();
+  const { id } = useParams();
 
   const [imageArr, setImageArr] = useState([]);
   const [sender, setSender] = useState('');
@@ -52,7 +52,7 @@ function PostMessage() {
     e.preventDefault();
     const postData = {
       team: TEAM,
-      recipientId: ID,
+      recipientId: id,
       sender,
       profileImageURL: profileImage,
       relationship,
@@ -61,7 +61,7 @@ function PostMessage() {
     };
 
     try {
-      fetch(`${URL}/${TEAM}/recipients/${ID}/messages/`, {
+      fetch(`${URL}/${TEAM}/recipients/${id}/messages/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -69,7 +69,9 @@ function PostMessage() {
         body: JSON.stringify(postData),
       });
 
-      navigate(`/post/${ID}`);
+      alert('메시지 전송 성공~');
+
+      navigate(`/post/${id}`);
     } catch (err) {
       throw new Error(`Post Error ${err}`);
     }

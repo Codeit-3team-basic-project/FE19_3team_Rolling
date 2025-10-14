@@ -1,6 +1,5 @@
 const URL = 'https://rolling-api.vercel.app';
 const TEAM = '19-3';
-const ID = 13971;
 
 const emojiPallete = [
   '😂',
@@ -18,7 +17,7 @@ const emojiPallete = [
   '😎',
 ];
 
-function EmojiPickerz() {
+function EmojiPickerz({ ID = 13971 }) {
   const handleClick = async e => {
     e.preventDefault();
     const emoji = e.target.textContent;

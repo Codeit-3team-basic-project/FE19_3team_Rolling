@@ -3,9 +3,8 @@ import { useState, useEffect } from 'react';
 
 const URL = 'https://rolling-api.vercel.app';
 const TEAM = '19-3';
-const ID = 13971; // 테스트 하려고 임시로 설정한 ID입니다. ID는 받아서 유동적으로 처리될 예정입니다.
 
-function EmojiDropdown() {
+function EmojiDropdown({ ID = 13971 }) {
   const [emojiList, setEmojiList] = useState([]);
 
   useEffect(() => {
