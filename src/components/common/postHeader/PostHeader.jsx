@@ -2,29 +2,44 @@
 import { useState, useRef, useEffect } from 'react';
 import ShareDropdown from './ShareDropdown';
 import EmojiDropdown from './EmojiDropdown';
-import EmojiPicker from 'emoji-picker-react';
+import EmojiPickerz from '../EmojiPickerz';
+import 'emoji-picker-element';
+
+const URL = 'https://rolling-api.vercel.app';
+const TEAM = '19-3'; // 우리팀 데이터는 없어서 테스트용도로 임시로 다른 팀꺼로 설정했습니다. 나중에는 URL에 19-3이 추가될 예정.
+const ID = 13971; // 테스트 하려고 임시로 설정한 ID입니다. ID는 받아서 유동적으로 처리될 예정입니다.
 
 function PostHeader() {
   const menuRef = useRef();
-
-  const [name, _setName] = useState('Ashley Kim');
-  const [peopleCount, _setPeopleCount] = useState(0);
+  const [name, setName] = useState('Undefined');
+  const [peopleCount, setPeopleCount] = useState(0);
+  const [topReactions, setTopReactions] = useState([]);
   const [emojiDrop, setEmojiDrop] = useState(false);
   const [emojiPicker, setEmojiPicker] = useState(false);
   const [shareDrop, setShareDrop] = useState(false);
 
-  const handleEmojiClick = () => {
-    setEmojiDrop(emojiDrop => !emojiDrop);
-  };
+  useEffect(() => {
+    const fetchEmojis = async () => {
+      try {
+        const res = await fetch(`${URL}/${TEAM}/recipients/${ID}/`, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+          },
+        });
 
-  const handleEmojiPicker = () => {
-    setEmojiPicker(emojiPicker => !emojiPicker);
-  };
+        const data = await res.json();
+        setName(data.name);
+        setPeopleCount(data.messageCount);
+        setTopReactions(data.topReactions);
+      } catch (e) {
+        throw new Error(`HTTP error! status: ${e}`);
+      }
+    };
+    fetchEmojis();
+  }, []);
 
-  const handleShareClick = () => {
-    setShareDrop(shareDrop => !shareDrop);
-  };
-
+  // 드롭다운 박스 열린 상태에서 외부 클릭하면 사라지는 함수.
   useEffect(() => {
     function handleClickOutside(e) {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -53,22 +68,21 @@ function PostHeader() {
           </div>
           <div className='flex pl-28 items-center border-r-1 border-solid border-r-gray-200 pr-13'>
             <div className='flex gap-8'>
-              <button className='flex gap-10 cursor-pointer border-1 rounded-4xl px-12 py-8 bg-black/54 hover:bg-gray-500 text-white text-16'>
-                <div>😂</div>
-                <div>1</div>
-              </button>
-              <button className='flex gap-10 cursor-pointer border-1 rounded-4xl px-12 py-8 bg-black/54 hover:bg-gray-500 text-white text-16'>
-                <div>😎</div>
-                <div>20</div>
-              </button>
-              <button className='flex gap-10 cursor-pointer border-1 rounded-4xl px-12 py-8 bg-black/54 hover:bg-gray-500 text-white text-16'>
-                <div>👍</div>
-                <div>30</div>
-              </button>
+              {topReactions.map((emo, emoIndex) => (
+                <button
+                  key={emoIndex}
+                  className='flex gap-10 cursor-pointer border-1 rounded-4xl px-12 py-8 bg-black/54 hover:bg-gray-500 text-white text-16'
+                >
+                  <div>{emo.emoji}</div>
+                  <div>{emo.count}</div>
+                </button>
+              ))}
             </div>
             <div className='px-8 relative'>
               <button
-                onClick={handleEmojiClick}
+                onClick={() => {
+                  setEmojiDrop(emojiDrop => !emojiDrop);
+                }}
                 className='flex items-center cursor-pointer'
               >
                 <div className='w-36 h-36 bg-[url(../../../arrow_down.svg)] bg-cover bg-no-repeat bg-center'></div>
@@ -79,22 +93,28 @@ function PostHeader() {
                 </div>
               )}
             </div>
-            <button
-              onClick={handleEmojiPicker}
-              className='flex relative gap-4 px-16 py-6 border-1 border-solid border-gray-300 hover:bg-gray-200 rounded-md text-16'
-            >
-              <div className='w-24 h-24 bg-[url(../../../add-24.svg)] bg-cover bg-no-repeat bg-center'></div>
-              <div>추가</div>
-            </button>
-            {emojiPicker && (
-              <div className='absolute top-120 right-0'>
-                <EmojiPicker />
-              </div>
-            )}
+            <div className='relative'>
+              <button
+                onClick={() => {
+                  setEmojiPicker(emojiPicker => !emojiPicker);
+                }}
+                className='flex gap-4 px-16 py-6 border-1 border-solid border-gray-300 hover:bg-gray-200 rounded-md text-16'
+              >
+                <div className='w-24 h-24 bg-[url(../../../add-24.svg)] bg-cover bg-no-repeat bg-center'></div>
+                <div>추가</div>
+              </button>
+              {emojiPicker && (
+                <div className='absolute top-full right-0'>
+                  <EmojiPickerz />
+                </div>
+              )}
+            </div>
           </div>
           <div className='pl-13 relative inline-block'>
             <button
-              onClick={handleShareClick}
+              onClick={() => {
+                setShareDrop(shareDrop => !shareDrop);
+              }}
               className='flex cursor-pointer gap-10 px-16 py-6 border-solid border-1 border-gray-300 hover:bg-gray-200 rounded-md'
             >
               <div className='w-24 h-24 bg-[url(../../../share-24.svg)] bg-cover bg-no-repeat bg-center'></div>
