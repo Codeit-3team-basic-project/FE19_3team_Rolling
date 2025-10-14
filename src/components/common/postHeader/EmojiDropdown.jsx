@@ -24,7 +24,7 @@ function EmojiDropdown({ ID = 13971 }) {
       }
     };
     fetchEmojis();
-  }, []);
+  }, [ID]);
 
   const rowArrary = (arr, size) => {
     const result = [];
