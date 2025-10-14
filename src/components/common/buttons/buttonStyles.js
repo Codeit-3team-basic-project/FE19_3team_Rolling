@@ -28,7 +28,7 @@ export const ButtonStyles = {
       disabled: 'bg-gray-300 text-white border-none cursor-not-allowed',
     },
     circle: {
-      enabled: 'bg-gray-500 rounded-full',
+      enabled: 'bg-gray-500 rounded-full hover:bg-gray-600 active:bg-gray-700',
       disabled: 'bg-gray-300',
     },
     arrow: {
