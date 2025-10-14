@@ -36,11 +36,11 @@ function Dropdown({ options, onSelect }) {
   }, []);
 
   return (
-    <div ref={dropdownRef} className='relative w-[290px]'>
+    <div ref={dropdownRef} className='relative w-[500px]'>
       {/* 클릭하는 버튼 */}
       <button
         onClick={toggleDropdown}
-        className='w-full py-12 px-16 border-1 border-gray-300 rounded-lg font-regular text-16 flex justify-between items-center cursor-pointer'
+        className='w-full h-[50px] px-3 border rounded text-sm flex justify-between items-center cursor-pointer'
       >
         <span className='text-black'>{selectedValue}</span>
         <span>{isOpen ? '▲' : '▼'}</span>
@@ -64,7 +64,7 @@ function Dropdown({ options, onSelect }) {
                 key={index}
                 onClick={() => handleSelect(option)}
                 className={`
-                  px-16 py-12 cursor-pointer border-1 border-gray-300
+                  px-3 py-2 cursor-pointer
                   ${isLastItem ? '' : 'border-b border-gray-200'}
                   ${isSelected ? 'bg-gray-100' : 'bg-white hover:bg-gray-50'}
                 `}
