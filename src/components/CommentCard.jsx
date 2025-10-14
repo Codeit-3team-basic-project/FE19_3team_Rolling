@@ -26,7 +26,7 @@ export default function CommentCard({
 
   return (
     <div
-      className={`w-[384px] rounded-2xl border border-purple-100 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-26 opacity-100 relative top-5 left-[31px] flex flex-col ${
+      className={`w-full rounded-2xl border border-purple-100 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-26 opacity-100 relative flex flex-col ${
         isExpanded ? 'h-auto min-h-[280px]' : 'h-[280px]'
       }`}
     >
