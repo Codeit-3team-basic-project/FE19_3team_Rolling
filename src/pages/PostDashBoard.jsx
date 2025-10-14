@@ -95,7 +95,7 @@ function PostDashBoard() {
       <PostHeader />
 
       <div
-        className='w-screen min-h-[calc(100vh-130px)] py-110'
+        className='w-full min-h-[calc(100vh-130px)] py-110'
         style={{
           backgroundColor: recipient?.backgroundColor || '#FFE2AD',
           backgroundImage: recipient?.backgroundImageURL

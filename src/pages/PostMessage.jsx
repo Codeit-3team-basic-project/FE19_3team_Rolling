@@ -80,7 +80,7 @@ function PostMessage() {
   };
 
   return (
-    <div>
+    <div className='pb-62'>
       <Header isDisplayed={false} />
       <div className='flex flex-col w-720 mx-auto my-47 gap-50'>
         <div className='flex flex-col gap-8'>
@@ -145,7 +145,7 @@ function PostMessage() {
       </div>
       <button
         onClick={handleClick}
-        className='cursor-pointer flex w-720 mx-auto my-62 px-24 py-14 rounded-xl bg-purple-600 hover:bg-purple-900 disabled:bg-gray-400 disabled:cursor-default text-18 text-white justify-center'
+        className='cursor-pointer flex w-720 mx-auto px-24 py-14 rounded-xl bg-purple-600 hover:bg-purple-900 disabled:bg-gray-400 disabled:cursor-default text-18 text-white justify-center'
         disabled={buttonCondition}
       >
         생성하기
