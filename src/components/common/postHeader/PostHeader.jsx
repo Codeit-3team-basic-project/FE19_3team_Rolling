@@ -18,38 +18,49 @@ function PostHeader() {
   const [emojiPicker, setEmojiPicker] = useState(false);
   const [shareDrop, setShareDrop] = useState(false);
 
-  useEffect(() => {
-    const fetchEmojis = async () => {
-      try {
-        const res = await fetch(`${URL}/${TEAM}/recipients/${ID}/`, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-          },
-        });
+  const fetchEmojis = async () => {
+    try {
+      const res = await fetch(`${URL}/${TEAM}/recipients/${ID}/`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-        const data = await res.json();
-        setName(data.name);
-        setPeopleCount(data.messageCount);
-        setTopReactions(data.topReactions);
-      } catch (e) {
-        throw new Error(`HTTP error! status: ${e}`);
+      if (!res.ok) {
+        throw new Error(`Get Error`);
       }
-    };
+
+      const data = await res.json();
+      setName(data.name);
+      setPeopleCount(data.messageCount);
+      setTopReactions(data.topReactions);
+    } catch (e) {
+      // 예외 처리 방법
+      if (e instanceof Error) {
+        throw new Error(`HTTP error! status: ${e.message}`);
+      }
+      throw new Error('Unknown Error');
+    }
+  };
+
+  useEffect(() => {
     fetchEmojis();
   }, []);
 
   // 드롭다운 박스 열린 상태에서 외부 클릭하면 사라지는 함수.
   useEffect(() => {
-    function handleClickOutside(e) {
+    const handleClickOutside = e => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setEmojiDrop(false);
         setEmojiPicker(false);
         setShareDrop(false);
       }
-    }
+    };
 
     document.addEventListener('mousedown', handleClickOutside);
+
+    // cleanup
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
