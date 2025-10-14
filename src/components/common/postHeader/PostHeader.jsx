@@ -6,10 +6,11 @@ import EmojiPickerz from '../EmojiPickerz';
 import 'emoji-picker-element';
 
 const URL = 'https://rolling-api.vercel.app';
-const TEAM = '19-3'; // 우리팀 데이터는 없어서 테스트용도로 임시로 다른 팀꺼로 설정했습니다. 나중에는 URL에 19-3이 추가될 예정.
-const ID = 13971; // 테스트 하려고 임시로 설정한 ID입니다. ID는 받아서 유동적으로 처리될 예정입니다.
+const TEAM = '19-3';
 
-function PostHeader() {
+// PostHeader는 앞으로 ID를 props를 설정하셔야합니다.
+// Post 페이지에서 받은 id 값을 프롭스로 집어 넣으시면 되겠습니다.
+function PostHeader({ ID = 13971 }) {
   const menuRef = useRef();
   const [name, setName] = useState('Undefined');
   const [peopleCount, setPeopleCount] = useState(0);
@@ -74,8 +75,11 @@ function PostHeader() {
       <div className='flex items-center justify-between max-w-1200 mx-auto py-11 text-18'>
         <div className='text-28 text-gray-800 font-bold'>To. {name}</div>
         <div className='flex items-center'>
-          <div className='border-r-1 border-solid border-r-gray-200 pr-28'>
-            <span className='font-bold'>{peopleCount}</span>명이 작성했어요!
+          <div className='flex gap-11 border-r-1 border-solid border-r-gray-200 pr-28'>
+            <div></div>
+            <div>
+              <span className='font-bold'>{peopleCount}</span>명이 작성했어요!
+            </div>
           </div>
           <div className='flex pl-28 items-center border-r-1 border-solid border-r-gray-200 pr-13'>
             <div className='flex gap-8'>

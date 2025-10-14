@@ -1,16 +1,17 @@
 import Header from '../components/common/Header';
 import Dropdown from '../components/common/dropdown/Dropdown';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const URL = 'https://rolling-api.vercel.app';
 const TEAM = '19-3';
-const ID = 13971; // 테스트 하려고 임시로 설정한 ID입니다. ID는 받아서 유동적으로 처리될 예정입니다.
 
 const RELATIONS = ['지인', '친구', '동료', '가족'];
 const FONTS = ['Noto Sans', 'Pretendard', 'Poppins']; // Font 모음입니다.
 
 function PostMessage() {
+  const { ID } = useParams();
+
   const [imageArr, setImageArr] = useState([]);
   const [sender, setSender] = useState('');
   const [senderFocus, setSenderFocus] = useState(false);
