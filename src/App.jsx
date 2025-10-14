@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import Header from './Header';
-import ColorSelection from './components/common/ColorSelection';
-import BadgeSelector from './components/common/BadgeSelector';
-import BadgeSelected from './components/common/BadgeSelected';
+import Header from './components/common/Header';
+import ColorSelection from './components/common/ColorSelector/ColorSelection';
+import BadgeSelector from './components/common/Badge/BadgeSelector';
+import BadgeSelected from './components/common/Badge/BadgeSelected';
+import Button from './components/common/Button';
+import { IconPlus, IconArrow } from './components/common/Icons';
 
 function App() {
   const [selectedColor, setSelectedColor] = useState('orange');
@@ -43,6 +45,29 @@ function App() {
             </div>
           </div>
         </section>
+      </div>
+      <div>
+        <h2>버튼 테스트입니다</h2>
+        <Button variant='primary' size='40' state='enabled' icon=''>
+          Primary
+        </Button>
+        <Button variant='secondary' size='36' state='enabled' icon=''>
+          secondary
+        </Button>
+        <Button variant='outlined' size='32' state='enabled' icon=''>
+          outlined
+        </Button>
+        <Button
+          variant='circle'
+          size='56'
+          state='enabled'
+          icon={<IconPlus size='28' />}
+        />
+        <Button
+          variant='arrow'
+          state='enabled'
+          icon={<IconArrow size='28' />}
+        />
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { badges } from './badgeData';
+import { badges } from '../badgeData';
 
 export default function BadgeSelector({ selected, onSelectionChange }) {
   return (

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { badges } from './badgeData';
+import { badges } from '../badgeData';
 
 export default function BadgeSelected({ selectedId, className }) {
   // 선택된 배지 찾기

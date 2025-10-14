@@ -1,0 +1,32 @@
+// 롤링 서비스 모든 페이지에 적용되는 헤더입니다.
+function Header({ isDisplayed = true }) {
+  // 추후에 생성 페이지로 이동하는 코드 작성 예정.
+  const handleOnClick = () => {
+    return;
+  };
+
+  return (
+    <div className='bg-white text-black border-b border-solid border-gray-200'>
+      <div className='flex items-center justify-between max-w-1200 mx-auto py-11 text-20'>
+        <div className='flex gap-8 cursor-pointer'>
+          <img src='./rolling.svg' className='size-28' alt='rolling' />
+          <a href='https://www.google.com' className='poppins-bold'>
+            Rolling
+          </a>
+        </div>
+        <div>
+          {isDisplayed && (
+            <button
+              onClick={handleOnClick}
+              className='cursor-pointer border-1 text-16 border-gray-300 rounded-md px-16 py-8 hover:bg-gray-200'
+            >
+              롤링 페이퍼 만들기
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Header;
