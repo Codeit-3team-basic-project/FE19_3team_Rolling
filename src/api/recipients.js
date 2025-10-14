@@ -11,7 +11,7 @@ export async function getRecipients() {
 
 // 새로운 카드 추가 (POST)
 export async function createRecipient(newData) {
-  const res = await axios.post(`${BASE_URL}/recipients`, newData);
+  const res = await axios.post(`${BASE_URL}/recipients/`, newData);
   return res.data;
 }
 

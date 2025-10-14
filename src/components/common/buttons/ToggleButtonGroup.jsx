@@ -1,27 +1,24 @@
-import { useState } from 'react';
 import Button from './Button';
 
-export default function ToggleButtonGroup() {
-  const [selected, setSelected] = useState('color'); // 현재 선택된 버튼 상태
-
+export default function ToggleButtonGroup({ selected, onSelectionChange }) {
   return (
-    <div>
+    <div className="flex gap-2">
       {/* 컬러 버튼 */}
       <Button
-        variant='secondary'
+        variant={selected === 'color' ? 'secondary' : 'outlined'}
         size='40'
-        state={selected === 'color' ? 'enabled' : 'focus'}
-        onClick={() => setSelected('color')}
+        onClick={() => onSelectionChange('color')}
+        className="flex-1"
       >
         컬러
       </Button>
 
       {/* 이미지 버튼 */}
       <Button
-        variant='secondary'
+        variant={selected === 'image' ? 'secondary' : 'outlined'}
         size='40'
-        state={selected === 'image' ? 'enabled' : 'focus'}
-        onClick={() => setSelected('image')}
+        onClick={() => onSelectionChange('image')}
+        className="flex-1"
       >
         이미지
       </Button>

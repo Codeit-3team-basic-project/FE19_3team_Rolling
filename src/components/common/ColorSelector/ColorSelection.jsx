@@ -1,18 +1,20 @@
 import { useState } from 'react';
 import clsx from 'clsx';
 
-const ColorSelection = () => {
+const ColorSelection = ({ selected, onChange }) => {
   const colors = [
-    { id: 'orange', name: '오렌지', value: 'var(--color-orange-200)' },
-    { id: 'purple', name: '퍼플', value: 'var(--color-purple-200)' },
-    { id: 'blue', name: '블루', value: 'var(--color-blue-200)' },
-    { id: 'green', name: '그린', value: 'var(--color-green-200)' },
+    { id: 'orange200', name: '오렌지', value: '#ffe2ad' },
+    { id: 'purple200', name: '퍼플', value: '#ecd9ff' },
+    { id: 'blue200', name: '블루', value: '#b1e4ff' },
+    { id: 'green200', name: '그린', value: '#d0f5c3' },
   ];
 
-  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(selected);
 
   const handleColorChange = colorId => {
     setSelectedColor(colorId);
+    const selectedColorData = colors.find(color => color.id === colorId);
+    onChange && onChange(selectedColorData); // 색상 객체 전체를 부모 컴포넌트에 전달
   };
 
   return (
@@ -24,7 +26,7 @@ const ColorSelection = () => {
           className={clsx(
             'w-full aspect-square rounded-lg transition-all duration-200',
             {
-              'ring-2 ring-gray-800 ring-offset-2': selectedColor === color.id,
+              '': selectedColor === color.id,
               'hover:scale-105 hover:shadow-md': selectedColor !== color.id,
             }
           )}
