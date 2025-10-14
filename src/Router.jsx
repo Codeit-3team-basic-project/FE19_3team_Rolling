@@ -12,7 +12,7 @@ export default function AppRouter() {
         <Route path='/list' element={<List />} />
         <Route path='/post' element={<PostDashBoard />} />
         {/* path에 ID 추가 필요 */}
-        <Route path='/post/message' element={<PostMessage />} />
+        <Route path='/post/:id/message' element={<PostMessage />} />
       </Routes>
     </Router>
   );

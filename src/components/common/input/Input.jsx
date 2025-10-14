@@ -23,7 +23,7 @@ function Input({ value, onChange }) {
         value={value}
         onChange={handleChange}
         onBlur={handleOutSide}
-        placeholder='이름을 입력해 주세요'
+        placeholder='받는 사람 이름을 입력해 주세요'
         className={`w-full px-4 py-2 border-1 rounded-lg focus:outline-none font-regular ${
           showError
             ? 'border-error'
