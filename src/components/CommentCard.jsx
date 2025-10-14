@@ -32,7 +32,10 @@ export default function CommentCard({
     >
       {/* 삭제 버튼 */}
       <button
-        onClick={onDelete}
+        onClick={e => {
+          e.stopPropagation();
+          onDelete();
+        }}
         className='absolute w-[40px] h-[40px] rounded-md border border-gray-200 p-2 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors opacity-100'
         style={{ top: '28px', left: '320px' }}
         title='삭제'

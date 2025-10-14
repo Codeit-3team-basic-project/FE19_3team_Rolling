@@ -2,11 +2,6 @@
 import { Link } from 'react-router-dom';
 import RollingIcon from '../../../public/rolling.svg';
 function Header({ isDisplayed = true }) {
-  // 추후에 생성 페이지로 이동하는 코드 작성 예정.
-  const handleOnClick = () => {
-    return;
-  };
-
   return (
     <div className='bg-white text-black border-b border-solid border-gray-200'>
       <div className='flex items-center justify-between max-w-1200 mx-auto py-11 text-20'>
@@ -16,12 +11,11 @@ function Header({ isDisplayed = true }) {
         </Link>
         <div>
           {isDisplayed && (
-            <button
-              onClick={handleOnClick}
-              className='cursor-pointer border-1 text-16 border-gray-300 rounded-md px-16 py-8 hover:bg-gray-200'
-            >
-              롤링 페이퍼 만들기
-            </button>
+            <Link to='/post'>
+              <button className='cursor-pointer border-1 text-16 border-gray-300 rounded-md px-16 py-8 hover:bg-gray-200'>
+                내 롤링 페이퍼 보기
+              </button>
+            </Link>
           )}
         </div>
       </div>
