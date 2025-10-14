@@ -16,12 +16,13 @@ function Header({ isDisplayed = true }) {
         </Link>
         <div>
           {isDisplayed && (
-            <button
-              onClick={handleOnClick}
-              className='cursor-pointer border-1 text-16 border-gray-300 rounded-md px-16 py-8 hover:bg-gray-200'
-            >
-              롤링 페이퍼 만들기
-            </button>
+            <Link to="/post">
+              <button
+                className='cursor-pointer border-1 text-16 border-gray-300 rounded-md px-16 py-8 hover:bg-gray-200'
+              >
+                내 롤링 페이퍼 보기
+              </button>
+            </Link>
           )}
         </div>
       </div>
