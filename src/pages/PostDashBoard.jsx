@@ -4,7 +4,7 @@ import Header from '../components/common/Header';
 import PostHeader from '../components/common/postHeader/PostHeader';
 import CommentCard from '../components/CommentCard';
 import Button from '../components/common/buttons/Button';
-import { getRecipients } from '../api/recipients';
+import { getRecipients, deleteRecipient } from '../api/recipients';
 import MessageModal from '../components/common/Modal';
 
 function PostDashBoard() {
@@ -29,8 +29,13 @@ function PostDashBoard() {
   }, []);
 
   // 삭제 함수
-  const handleDelete = id => {
-    setRecipients(prev => prev.filter(recipient => recipient.id !== id));
+  const handleDelete = async id => {
+    try {
+      await deleteRecipient(id);
+      setRecipients(prev => prev.filter(r => r.id !== id));
+    } catch (error) {
+      console.error('삭제 중 오류:', error);
+    }
   };
 
   // 모달 열기
