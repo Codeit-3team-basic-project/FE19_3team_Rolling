@@ -3,13 +3,14 @@ import { useState, useRef, useEffect } from 'react';
 import ShareDropdown from './ShareDropdown';
 import EmojiDropdown from './EmojiDropdown';
 import EmojiPickerz from '../EmojiPickerz';
-import 'emoji-picker-element';
 
 const URL = 'https://rolling-api.vercel.app';
-const TEAM = '19-3'; // 우리팀 데이터는 없어서 테스트용도로 임시로 다른 팀꺼로 설정했습니다. 나중에는 URL에 19-3이 추가될 예정.
-const ID = 13971; // 테스트 하려고 임시로 설정한 ID입니다. ID는 받아서 유동적으로 처리될 예정입니다.
+const TEAM = '19-3';
 
-function PostHeader() {
+// PostHeader는 앞으로 ID를 props를 설정하셔야합니다.
+// Post 페이지에서 받은 id 값을 프롭스로 집어 넣으시면 되겠습니다.
+function PostHeader({ ID = 13971 }) {
+  const currentUrl = window.location.href;
   const menuRef = useRef();
   const [name, setName] = useState('Undefined');
   const [peopleCount, setPeopleCount] = useState(0);
@@ -18,35 +19,82 @@ function PostHeader() {
   const [emojiPicker, setEmojiPicker] = useState(false);
   const [shareDrop, setShareDrop] = useState(false);
 
-  const fetchEmojis = async () => {
-    try {
-      const res = await fetch(`${URL}/${TEAM}/recipients/${ID}/`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!res.ok) {
-        throw new Error(`Get Error`);
-      }
-
-      const data = await res.json();
-      setName(data.name);
-      setPeopleCount(data.messageCount);
-      setTopReactions(data.topReactions);
-    } catch (e) {
-      // 예외 처리 방법
-      if (e instanceof Error) {
-        throw new Error(`HTTP error! status: ${e.message}`);
-      }
-      throw new Error('Unknown Error');
-    }
+  // URL 공유 기능 추가, alert는 toast로 비뀔 예정입니다.
+  const shareUrl = () => {
+    navigator.clipboard
+      .writeText(currentUrl)
+      .then(() => alert('Url 복사 완료'))
+      .catch(() => alert('복사 실패!'));
   };
 
   useEffect(() => {
-    fetchEmojis();
+    if (!window.Kakao) return;
+    if (!window.Kakao.isInitialized()) {
+      window.Kakao.init('aca6605f6026e2a9fbe224a6bc9adfd9');
+    }
   }, []);
+
+  const shareKakao = () => {
+    if (!window.Kakao) {
+      alert('카카오 SDK가 로딩되지 않았습니다.');
+      return;
+    }
+
+    window.Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: `To. ${name}`,
+        description: `${peopleCount}명이 작성했어요!`,
+        imageUrl:
+          'https://static.vecteezy.com/system/resources/thumbnails/002/375/040/small_2x/modern-white-background-free-vector.jpg',
+        link: {
+          mobileWebUrl: currentUrl,
+          webUrl: currentUrl,
+        },
+      },
+      buttons: [
+        {
+          title: '롤링페이퍼 보러가기',
+          link: {
+            mobileWebUrl: currentUrl,
+            webUrl: currentUrl,
+          },
+        },
+      ],
+    });
+
+    alert('카카오톡 공유 성공~');
+  };
+
+  // ID 값에 따라 반응 리스트를 새로 갖고옴.
+  useEffect(() => {
+    const fetchEmojis = async () => {
+      try {
+        const res = await fetch(`${URL}/${TEAM}/recipients/${ID}/`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error(`Get Error`);
+        }
+
+        const data = await res.json();
+        setName(data.name);
+        setPeopleCount(data.messageCount);
+        setTopReactions(data.topReactions);
+      } catch (e) {
+        // 예외 처리 방법
+        if (e instanceof Error) {
+          throw new Error(`HTTP error! status: ${e.message}`);
+        }
+        throw new Error('Unknown Error');
+      }
+    };
+    fetchEmojis();
+  }, [ID]);
 
   // 드롭다운 박스 열린 상태에서 외부 클릭하면 사라지는 함수.
   useEffect(() => {
@@ -74,8 +122,11 @@ function PostHeader() {
       <div className='flex items-center justify-between max-w-1200 mx-auto py-11 text-18'>
         <div className='text-28 text-gray-800 font-bold'>To. {name}</div>
         <div className='flex items-center'>
-          <div className='border-r-1 border-solid border-r-gray-200 pr-28'>
-            <span className='font-bold'>{peopleCount}</span>명이 작성했어요!
+          <div className='flex gap-11 border-r-1 border-solid border-r-gray-200 pr-28'>
+            <div></div>
+            <div>
+              <span className='font-bold'>{peopleCount}</span>명이 작성했어요!
+            </div>
           </div>
           <div className='flex pl-28 items-center border-r-1 border-solid border-r-gray-200 pr-13'>
             <div className='flex gap-8'>
@@ -132,7 +183,10 @@ function PostHeader() {
             </button>
             {shareDrop && (
               <div className='absolute top-full'>
-                <ShareDropdown />
+                <ShareDropdown
+                  onShareKakao={shareKakao}
+                  onShareUrl={shareUrl}
+                />
               </div>
             )}
           </div>
