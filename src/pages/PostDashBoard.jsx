@@ -12,7 +12,7 @@ function PostDashBoard() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState(null);
-  const [_recipient, setRecipient] = useState();
+  const [recipient, setRecipient] = useState();
 
   useEffect(() => {
     async function fetchMessages() {
@@ -95,8 +95,16 @@ function PostDashBoard() {
       <PostHeader />
 
       <div
-        className='w-screen min-h-[calc(100vh-130px)] py-110'
-        style={{ backgroundColor: 'white' }}
+        className='w-full min-h-[calc(100vh-130px)] py-110'
+        style={{
+          backgroundColor: recipient?.backgroundColor || '#FFE2AD',
+          backgroundImage: recipient?.backgroundImageURL
+            ? `url(${recipient.backgroundImageURL})`
+            : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
       >
         <div className='w-1200 mx-auto'>
           <div className='w-full mb-10 flex justify-end'>
