@@ -12,7 +12,7 @@ function PostDashBoard() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState(null);
-  const [setRecipient] = useState();
+  const [_recipient, setRecipient] = useState();
 
   useEffect(() => {
     async function fetchMessages() {
@@ -124,12 +124,12 @@ function PostDashBoard() {
                         Messages.backgroundImageURL ||
                         'https://learn-codeit-kr-static.s3.ap-northeast-2.amazonaws.com/sprint-proj-image/default_avatar.png'
                       }
-                      name={Messages.name}
+                      name={message?.sender || '익명'}
                       relation={message?.relationship || '지인'}
                       comment={message?.content || '메시지가 없습니다'}
                       date={
                         message
-                          ? new Date(message.createdAt).toLocaleDateString()
+                          ? new Date(Messages.createdAt).toLocaleDateString()
                           : new Date(Messages.createdAt).toLocaleDateString()
                       }
                       onDelete={() => handleDelete(Messages.id)}
