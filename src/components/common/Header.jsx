@@ -1,5 +1,6 @@
 // 롤링 서비스 모든 페이지에 적용되는 헤더입니다.
 import { Link } from 'react-router-dom';
+import RollingIcon from '../../../public/rolling.svg';
 function Header({ isDisplayed = true }) {
   // 추후에 생성 페이지로 이동하는 코드 작성 예정.
   const handleOnClick = () => {
@@ -10,7 +11,7 @@ function Header({ isDisplayed = true }) {
     <div className='bg-white text-black border-b-1 border-solid border-b-gray-200'>
       <div className='flex items-center justify-between max-w-1200 mx-auto py-11 text-20'>
         <Link to='/' className='flex gap-8 cursor-pointer'>
-          <img src='./rolling.svg' className='size-28' alt='rolling' />
+          <img src={RollingIcon} className='size-28' alt='rolling' />
           <span className='poppins-bold'>Rolling</span>
         </Link>
         <div>
