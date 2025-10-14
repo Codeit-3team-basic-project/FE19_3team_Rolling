@@ -60,7 +60,6 @@ function Dropdown({ options, onSelect }) {
             const isLastItem = index === options.length - 1;
 
             return (
-              // eslint-disable-next-line jsx-a11y/click-events-have-key-events
               <li
                 key={index}
                 onClick={() => handleSelect(option)}
