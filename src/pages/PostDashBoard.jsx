@@ -92,7 +92,7 @@ function PostDashBoard() {
   return (
     <div className='min-h-screen'>
       <Header />
-      <PostHeader />
+      <PostHeader ID={id} />
 
       <div
         className='w-full min-h-[calc(100vh-130px)] py-110'
