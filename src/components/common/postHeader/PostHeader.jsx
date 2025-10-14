@@ -10,6 +10,7 @@ const TEAM = '19-3';
 // PostHeader는 앞으로 ID를 props를 설정하셔야합니다.
 // Post 페이지에서 받은 id 값을 프롭스로 집어 넣으시면 되겠습니다.
 function PostHeader({ ID = 13971 }) {
+  const currentUrl = window.location.href;
   const menuRef = useRef();
   const [name, setName] = useState('Undefined');
   const [peopleCount, setPeopleCount] = useState(0);
@@ -18,6 +19,54 @@ function PostHeader({ ID = 13971 }) {
   const [emojiPicker, setEmojiPicker] = useState(false);
   const [shareDrop, setShareDrop] = useState(false);
 
+  // URL 공유 기능 추가, alert는 toast로 비뀔 예정입니다.
+  const shareUrl = () => {
+    navigator.clipboard
+      .writeText(currentUrl)
+      .then(() => alert('Url 복사 완료'))
+      .catch(() => alert('복사 실패!'));
+  };
+
+  useEffect(() => {
+    if (!window.Kakao) return;
+    if (!window.Kakao.isInitialized()) {
+      window.Kakao.init('aca6605f6026e2a9fbe224a6bc9adfd9');
+    }
+  }, []);
+
+  const shareKakao = () => {
+    if (!window.Kakao) {
+      alert('카카오 SDK가 로딩되지 않았습니다.');
+      return;
+    }
+
+    window.Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: `To. ${name}`,
+        description: `${peopleCount}명이 작성했어요!`,
+        imageUrl:
+          'https://static.vecteezy.com/system/resources/thumbnails/002/375/040/small_2x/modern-white-background-free-vector.jpg',
+        link: {
+          mobileWebUrl: currentUrl,
+          webUrl: currentUrl,
+        },
+      },
+      buttons: [
+        {
+          title: '롤링페이퍼 보러가기',
+          link: {
+            mobileWebUrl: currentUrl,
+            webUrl: currentUrl,
+          },
+        },
+      ],
+    });
+
+    alert('카카오톡 공유 성공~');
+  };
+
+  // ID 값에 따라 반응 리스트를 새로 갖고옴.
   useEffect(() => {
     const fetchEmojis = async () => {
       try {
@@ -134,7 +183,10 @@ function PostHeader({ ID = 13971 }) {
             </button>
             {shareDrop && (
               <div className='absolute top-full'>
-                <ShareDropdown />
+                <ShareDropdown
+                  onShareKakao={shareKakao}
+                  onShareUrl={shareUrl}
+                />
               </div>
             )}
           </div>
