@@ -3,10 +3,10 @@ import clsx from 'clsx';
 
 const ColorSelection = ({ selected, onChange }) => {
   const colors = [
-    { id: 'orange200', name: '오렌지', value: '#ffe2ad' },
-    { id: 'purple200', name: '퍼플', value: '#ecd9ff' },
-    { id: 'blue200', name: '블루', value: '#b1e4ff' },
-    { id: 'green200', name: '그린', value: '#d0f5c3' },
+    { id: 'orange', name: '오렌지', value: '#ffe2ad' },
+    { id: 'purple', name: '퍼플', value: '#ecd9ff' },
+    { id: 'blue', name: '블루', value: '#b1e4ff' },
+    { id: 'green', name: '그린', value: '#d0f5c3' },
   ];
 
   const [selectedColor, setSelectedColor] = useState(selected);

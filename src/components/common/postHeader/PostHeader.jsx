@@ -151,7 +151,7 @@ function PostHeader({ ID = 13971 }) {
               </button>
               {emojiDrop && (
                 <div className='absolute top-full right-0'>
-                  <EmojiDropdown />
+                  <EmojiDropdown ID={ID} />
                 </div>
               )}
             </div>
@@ -167,7 +167,7 @@ function PostHeader({ ID = 13971 }) {
               </button>
               {emojiPicker && (
                 <div className='absolute top-full right-0'>
-                  <EmojiPickerz />
+                  <EmojiPickerz ID={ID} />
                 </div>
               )}
             </div>

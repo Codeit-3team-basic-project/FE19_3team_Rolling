@@ -30,7 +30,7 @@ function PostDashBoard() {
         const data = await res.json();
         setMessages(data.results);
       } catch (error) {
-        console.error('Failed to fetch messages:', error);
+        console.error('Failed to fetch messages:', error.message);
       } finally {
         setLoading(false);
       }
@@ -51,7 +51,7 @@ function PostDashBoard() {
         const data = await res.json();
         setRecipient(data);
       } catch (error) {
-        console.error('Failed to fetch messages:', error);
+        console.error('Failed to fetch messages:', error.message);
       }
     }
 
@@ -108,7 +108,7 @@ function PostDashBoard() {
       >
         <div className='w-1200 mx-auto'>
           <div className='w-full mb-10 flex justify-end'>
-            <Link to='/post/:id/message'>
+            <Link to={`/post/${id}/message`}>
               <Button variant='primary' size='40' state='enabled'>
                 생성하기
               </Button>
