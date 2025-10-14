@@ -3,12 +3,12 @@ import Header from '../components/common/Header';
 
 export default function Home() {
   return (
-    <>
+    <div className="bg-white min-h-screen">
       {/* 공용 헤더 */}
       <Header />
 
       {/* 메인 컨텐츠 */}
-      <main className='mt-50 flex flex-col items-center gap-30'>
+      <main className='mt-50 flex flex-col items-center bg-white'>
         {/* 첫 번째 섹션 */}
         <section className='relative w-[1200px] h-[324px] rounded-[16px] bg-[#F6F8FF] p-10 flex flex-col justify-center'>
           {/* 왼쪽 텍스트 */}
@@ -33,7 +33,7 @@ export default function Home() {
         </section>
 
         {/* 두 번째 섹션 */}
-        <section className='mb-10 relative w-[1200px] h-[324px] rounded-[16px] bg-[#F6F8FF] p-10 flex flex-col justify-center'>
+        <section className='mt-40 relative w-[1200px] h-[324px] rounded-[16px] bg-[#F6F8FF] p-10 flex flex-col justify-center'>
           {/* 왼쪽 이미지 */}
           <img
             src='/images/banner2.png'
@@ -64,6 +64,6 @@ export default function Home() {
           </button>
         </Link>
       </div>
-    </>
+    </div>
   );
 }

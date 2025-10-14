@@ -14,3 +14,15 @@ export async function createRecipient(newData) {
   const res = await axios.post(`${BASE_URL}/recipients`, newData);
   return res.data;
 }
+
+// 리액션 업데이트
+export async function updateReaction(recipientId, reactionData) {
+  const res = await axios.put(`${BASE_URL}/recipients/${recipientId}/reactions`, reactionData);
+  return res.data;
+}
+
+// 리액션 가져오기
+export async function getReactions(recipientId) {
+  const res = await axios.get(`${BASE_URL}/recipients/${recipientId}/reactions`);
+  return res.data;
+}
