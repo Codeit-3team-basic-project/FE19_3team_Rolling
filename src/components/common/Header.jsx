@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import RollingIcon from '../../../public/rolling.svg';
 function Header({ isDisplayed = true }) {
   // 추후에 생성 페이지로 이동하는 코드 작성 예정.
-  const handleOnClick = () => {
+  const _handleOnClick = () => {
     return;
   };
 
@@ -16,10 +16,8 @@ function Header({ isDisplayed = true }) {
         </Link>
         <div>
           {isDisplayed && (
-            <Link to="/post">
-              <button
-                className='cursor-pointer border-1 text-16 border-gray-300 rounded-md px-16 py-8 hover:bg-gray-200'
-              >
+            <Link to='/post'>
+              <button className='cursor-pointer border-1 text-16 border-gray-300 rounded-md px-16 py-8 hover:bg-gray-200'>
                 내 롤링 페이퍼 보기
               </button>
             </Link>
