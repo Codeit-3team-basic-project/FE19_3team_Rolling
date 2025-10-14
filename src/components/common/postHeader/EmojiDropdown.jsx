@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 
 const URL = 'https://rolling-api.vercel.app';
-const TEAM = '19-3'; // 우리팀 데이터는 없어서 테스트용도로 임시로 다른 팀꺼로 설정했습니다. 나중에는 URL에 19-3이 추가될 예정.
+const TEAM = '19-3';
 const ID = 13971; // 테스트 하려고 임시로 설정한 ID입니다. ID는 받아서 유동적으로 처리될 예정입니다.
 
 function EmojiDropdown() {

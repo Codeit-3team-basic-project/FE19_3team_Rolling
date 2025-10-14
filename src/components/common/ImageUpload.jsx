@@ -1,142 +1,62 @@
-import { useState, useRef } from 'react';
-import clsx from 'clsx';
+import { useRef, useState, useEffect } from "react";
 
-const ImageUpload = () => {
-  const [selectedImages, setSelectedImages] = useState([]);
-  const [isDragOver, setIsDragOver] = useState(false);
-  const fileInputRef = useRef(null);
+const ImageUploader = () => {
+  const fileInputRef = useRef(null);      // 파일 input DOM 참조
+  const [selectedImage, setSelectedImage] = useState(null); // 실제 파일
+  const [previewUrl, setPreviewUrl] = useState(null);       // 미리보기 URL
 
-  const processFiles = files => {
-    const validFiles = Array.from(files).filter(file =>
-      file.type.startsWith('image/')
-    );
-
-    validFiles.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = e => {
-        const imageUrl = e.target.result;
-        setSelectedImages(prev => [
-          ...prev,
-          {
-            id: Date.now() + Math.random(),
-            url: imageUrl,
-            name: file.name,
-          },
-        ]);
-      };
-      reader.readAsDataURL(file);
-    });
+  // 파일 변경 시 실행
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      setSelectedImage(file);
+    } else {
+      alert("이미지 파일만 업로드 가능합니다.");
+    }
   };
 
-  const handleFileChange = e => {
-    processFiles(e.target.files);
+  // 버튼 클릭으로 파일 input 열기
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
   };
 
-  const handleDragOver = e => {
-    e.preventDefault();
-    setIsDragOver(true);
-  };
+  // 선택된 이미지가 바뀔 때마다 previewUrl 생성
+  useEffect(() => {
+    if (!selectedImage) return;
 
-  const handleDragLeave = e => {
-    e.preventDefault();
-    setIsDragOver(false);
-  };
+    const objectUrl = URL.createObjectURL(selectedImage);
+    setPreviewUrl(objectUrl);
 
-  const handleDrop = e => {
-    e.preventDefault();
-    setIsDragOver(false);
-    processFiles(e.dataTransfer.files);
-  };
-
-  const openFileDialog = () => {
-    fileInputRef.current?.click();
-  };
-
-  const removeImage = id => {
-    setSelectedImages(prev => prev.filter(img => img.id !== id));
-  };
+    // cleanup: 메모리 해제
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedImage]);
 
   return (
-    <div className={clsx('space-y-16')}>
-      <div className={clsx('flex gap-8 overflow-x-auto')}>
-        {/* 선택된 이미지들 */}
-        {selectedImages.map(image => (
-          <div
-            key={image.id}
-            className={clsx(
-              'relative flex-shrink-0 w-160 h-160 rounded-lg overflow-hidden border border-gray-200'
-            )}
-          >
-            <img
-              src={image.url}
-              alt={image.name}
-              className={clsx('w-full h-full object-cover')}
-            />
-            <button
-              onClick={() => removeImage(image.id)}
-              className={clsx(
-                'absolute top-4 right-4 w-24 h-24 bg-red-500 text-white rounded-full',
-                'flex items-center justify-center hover:bg-red-600 transition-colors'
-              )}
-            >
-              ×
-            </button>
-          </div>
-        ))}
-
-        {/* 파일 업로드 영역 */}
-        <div
-          className={clsx(
-            'flex-shrink-0 w-160 h-160 border-2 border-dashed rounded-lg',
-            'transition-colors cursor-pointer flex items-center justify-center',
-            {
-              'border-purple-400 bg-purple-50': isDragOver,
-              'border-gray-300 hover:border-gray-400': !isDragOver,
-            }
-          )}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-          onClick={openFileDialog}
-          role='button'
-          tabIndex={0}
-          onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              openFileDialog();
-            }
-          }}
-        >
-          <input
-            ref={fileInputRef}
-            type='file'
-            accept='image/*'
-            onChange={handleFileChange}
-            className='hidden'
-            multiple
+    <div className="flex flex-col items-center gap-4">
+      <button
+        onClick={handleButtonClick}
+        className="px-4 py-2 bg-purple-500 text-white rounded-lg shadow"
+      >
+        이미지 업로드
+      </button>
+      <input
+        type="file"
+        accept="image/*"
+        ref={fileInputRef}
+        style={{ display: "none" }}
+        onChange={handleFileChange}
+      />
+      {previewUrl && (
+        <div className="w-64 h-40 rounded-lg overflow-hidden border">
+          <img
+            src={previewUrl}
+            alt="미리보기"
+            className="object-cover w-full h-full"
           />
-          <div className={clsx('text-center')}>
-            <div className={clsx('space-y-8')}>
-              <img
-                src='/src/assets/imgs/Enabled.png'
-                alt='이미지 업로드'
-                className={clsx('mx-auto h-32 w-32')}
-              />
-              <p className={clsx('text-12 text-gray-600')}>
-                {isDragOver ? '여기에 이미지를 올려주세요' : '이미지 추가'}
-              </p>
-            </div>
-          </div>
         </div>
-      </div>
-
-      {selectedImages.length > 0 && (
-        <p className={clsx('text-14 text-gray-600')}>
-          선택된 이미지: {selectedImages.length}개
-        </p>
       )}
     </div>
   );
 };
 
-export default ImageUpload;
+export default ImageUploader;

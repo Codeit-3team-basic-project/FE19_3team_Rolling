@@ -1,4 +1,5 @@
 // 롤링 서비스 모든 페이지에 적용되는 헤더입니다.
+import { Link } from 'react-router-dom';
 function Header({ isDisplayed = true }) {
   // 추후에 생성 페이지로 이동하는 코드 작성 예정.
   const handleOnClick = () => {
@@ -8,12 +9,10 @@ function Header({ isDisplayed = true }) {
   return (
     <div className='bg-white text-black border-b border-solid border-gray-200'>
       <div className='flex items-center justify-between max-w-1200 mx-auto py-11 text-20'>
-        <div className='flex gap-8 cursor-pointer'>
+        <Link to='/' className='flex gap-8 cursor-pointer'>
           <img src='./rolling.svg' className='size-28' alt='rolling' />
-          <a href='https://www.google.com' className='poppins-bold'>
-            Rolling
-          </a>
-        </div>
+          <span className='poppins-bold'>Rolling</span>
+        </Link>
         <div>
           {isDisplayed && (
             <button
