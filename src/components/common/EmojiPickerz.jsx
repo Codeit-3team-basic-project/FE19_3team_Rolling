@@ -35,6 +35,8 @@ function EmojiPickerz() {
         },
         body: JSON.stringify(postData),
       });
+
+      alert(`${emoji} reaction increased!`);
     } catch (err) {
       throw new Error(`Reaction increase Error ${err}`);
     }
