@@ -26,13 +26,16 @@ export default function CommentCard({
 
   return (
     <div
-      className={`w-[384px] rounded-2xl border border-purple-100 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-26 opacity-100 relative top-5 left-[31px] flex flex-col ${
+      className={`w-full rounded-2xl border border-purple-100 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-26 opacity-100 relative flex flex-col ${
         isExpanded ? 'h-auto min-h-[280px]' : 'h-[280px]'
       }`}
     >
       {/* 삭제 버튼 */}
       <button
-        onClick={onDelete}
+        onClick={e => {
+          e.stopPropagation();
+          onDelete();
+        }}
         className='absolute w-[40px] h-[40px] rounded-md border border-gray-200 p-2 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors opacity-100'
         style={{ top: '28px', left: '320px' }}
         title='삭제'

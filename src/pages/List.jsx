@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { getRecipients } from '../api/recipients';
 import Card from '../components/Card';
 import Header from '../components/common/Header';
+import Button from '../components/common/buttons/Button';
+import { IconArrow } from '../components/common/icons/IconButton';
 
 export default function List() {
   const [cards, setCards] = useState([]); // 카드 리스트
@@ -43,20 +45,27 @@ export default function List() {
 
   const cardsPerPage = 4;
 
-  // API에서 받은 데이터를 인기/최근으로 분류
-  const popularCards = cards.filter(card => {
-    // 인기 기준: 반응 수가 많은 카드들
-    const totalReactions =
-      card.reactions?.reduce((sum, r) => sum + r.count, 0) || 0;
-    return totalReactions > 5 || card.participants > 10;
-  });
+  // 카드의 점수를 계산하는 함수
+  const calculateCardScore = (card) => {
+    const totalReactions = card.reactions?.reduce((sum, r) => sum + r.count, 0) || 0;
+    // 리액션 1개당 1점, 참여자 1명당 2점
+    return totalReactions + (card.participants * 2);
+  };
 
-  const recentCards = cards.filter(card => {
-    // 최근 기준: 인기가 아닌 나머지 카드들
-    const totalReactions =
-      card.reactions?.reduce((sum, r) => sum + r.count, 0) || 0;
-    return totalReactions <= 5 && card.participants <= 10;
-  });
+  // API에서 받은 데이터를 인기/최근으로 분류
+  const popularCards = cards
+    .filter(card => {
+      const totalReactions = card.reactions?.reduce((sum, r) => sum + r.count, 0) || 0;
+      // 최소 리액션 1개 이상인 카드만 선택
+      return totalReactions > 0;
+    })
+    .sort((a, b) => calculateCardScore(b) - calculateCardScore(a)); // 점수가 높은 순으로 정렬
+
+  const recentCards = cards
+    .filter(card => {
+      const totalReactions = card.reactions?.reduce((sum, r) => sum + r.count, 0) || 0;
+      return totalReactions === 0;
+    });
 
   const popularTotalPages = Math.ceil(popularCards.length / cardsPerPage);
   const recentTotalPages = Math.ceil(recentCards.length / cardsPerPage);
@@ -78,7 +87,7 @@ export default function List() {
   if (loading) return <div className='text-center mt-20'>로딩 중...</div>;
 
   return (
-    <>
+    <div className="bg-white min-h-screen">
       {/* 공용 헤더 */}
       <Header />
 
@@ -89,7 +98,7 @@ export default function List() {
             ⚠️ 데이터 로딩 중 오류가 발생했습니다: {error}
           </div>
         )}
-        <section className='relative w-[1160px] h-[260px] p-10 flex flex-col justify-center overflow-visible'>
+        <section className='relative w-[1160px] h-[420px] p-10 flex flex-col justify-start overflow-visible'>
           <h1 className='mb-10 font-[Pretendard] font-bold text-[24px] leading-[36px] tracking-[-0.01em]'>
             인기 롤링 페이퍼🔥
           </h1>
@@ -99,6 +108,7 @@ export default function List() {
                 getCurrentCards(popularCards, popularCurrentIndex).map(c => (
                   <li key={c.id}>
                     <Card
+                      id={c.id}
                       name={c.name}
                       avatars={c.avatars}
                       participants={c.participants}
@@ -108,7 +118,7 @@ export default function List() {
                   </li>
                 ))
               ) : (
-                <li className='col-span-4 text-center text-gray-500 py-8'>
+                <li className='col-span-4 h-[324px] flex items-center justify-center text-gray-500'>
                   인기 롤링 페이퍼가 없습니다.
                 </li>
               )}
@@ -117,46 +127,24 @@ export default function List() {
             {/* 이전/다음 버튼 */}
             {popularTotalPages > 1 && (
               <>
-                <button
-                  onClick={() =>
-                    prevSlide(setPopularCurrentIndex, popularTotalPages)
-                  }
-                  className='absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors z-50 border border-gray-200'
-                >
-                  <svg
-                    className='w-5 h-5 text-gray-600'
-                    fill='none'
-                    stroke='currentColor'
-                    viewBox='0 0 24 24'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M15 19l-7-7 7-7'
-                    />
-                  </svg>
-                </button>
-                <button
-                  onClick={() =>
-                    nextSlide(setPopularCurrentIndex, popularTotalPages)
-                  }
-                  className='absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors z-50 border border-gray-200'
-                >
-                  <svg
-                    className='w-5 h-5 text-gray-600'
-                    fill='none'
-                    stroke='currentColor'
-                    viewBox='0 0 24 24'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M9 5l7 7-7 7'
-                    />
-                  </svg>
-                </button>
+                <div className="absolute left-2 top-1/2 transform -translate-y-1/2">
+                  <Button 
+                    variant="circle" 
+                    size="40" 
+                    state="enabled" 
+                    icon={<IconArrow direc="lt" />}
+                    onClick={() => prevSlide(setPopularCurrentIndex, popularTotalPages)}
+                  />
+                </div>
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                  <Button 
+                    variant="circle" 
+                    size="40" 
+                    state="enabled" 
+                    icon={<IconArrow direc="rt" />}
+                    onClick={() => nextSlide(setPopularCurrentIndex, popularTotalPages)}
+                  />
+                </div>
               </>
             )}
           </div>
@@ -171,6 +159,7 @@ export default function List() {
                 getCurrentCards(recentCards, recentCurrentIndex).map(c => (
                   <li key={c.id}>
                     <Card
+                      id={c.id}
                       name={c.name}
                       avatars={c.avatars}
                       participants={c.participants}
@@ -189,46 +178,24 @@ export default function List() {
             {/* 이전/다음 버튼 */}
             {recentTotalPages > 1 && (
               <>
-                <button
-                  onClick={() =>
-                    prevSlide(setRecentCurrentIndex, recentTotalPages)
-                  }
-                  className='absolute left-[-50px] top-1/2 transform -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors'
-                >
-                  <svg
-                    className='w-5 h-5 text-gray-600'
-                    fill='none'
-                    stroke='currentColor'
-                    viewBox='0 0 24 24'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M15 19l-7-7 7-7'
-                    />
-                  </svg>
-                </button>
-                <button
-                  onClick={() =>
-                    nextSlide(setRecentCurrentIndex, recentTotalPages)
-                  }
-                  className='absolute right-[-50px] top-1/2 transform -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors'
-                >
-                  <svg
-                    className='w-5 h-5 text-gray-600'
-                    fill='none'
-                    stroke='currentColor'
-                    viewBox='0 0 24 24'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M9 5l7 7-7 7'
-                    />
-                  </svg>
-                </button>
+                <div className="absolute left-[-50px] top-1/2 transform -translate-y-1/2">
+                  <Button 
+                    variant="circle" 
+                    size="40" 
+                    state="enabled" 
+                    icon={<IconArrow direc="lt" />}
+                    onClick={() => prevSlide(setRecentCurrentIndex, recentTotalPages)}
+                  />
+                </div>
+                <div className="absolute right-[-50px] top-1/2 transform -translate-y-1/2">
+                  <Button 
+                    variant="circle" 
+                    size="40" 
+                    state="enabled" 
+                    icon={<IconArrow direc="rt" />}
+                    onClick={() => nextSlide(setRecentCurrentIndex, recentTotalPages)}
+                  />
+                </div>
               </>
             )}
           </div>
@@ -242,6 +209,6 @@ export default function List() {
           </button>
         </Link>
       </div>
-    </>
+    </div>
   );
 }
